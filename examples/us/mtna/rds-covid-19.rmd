@@ -56,17 +56,6 @@ footer {
   <h1 class="right" style="color:white;">COVID-19 Examples</h1>
 </div>
 
-#### Getting Started
-
-<div>
-  Don't know where to begin? The following resources can help get you started working with our COVID-19 data.
-  <ul>
-    <li><a href="https://covid19.richdataservices.com/" target="_blank" >RDS COVID-19 website</a> - introduction to the tools and services Metadata Technology North America (MTNA) provides for accessing COVID-19 data.</li>
-    <li><a href="https://github.com/mtna/covid-19" target="_blank">RDS COVID-19 GitHub repository</a> - the source data files use in the RDS COVID-19 catalog along with information about the sources we pull from and the transformations that were performed on them.</li>
-    <li><a href="https://github.com/mtna/rds-r" target="_blank">RDS R GitHub repository</a> - the R library for interacting with RDS.</li>
-  </ul>
-</div>
-
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 library(rds.r)
 library(ggplot2)
@@ -76,15 +65,11 @@ library(ggplot2)
 
 There are a variety of data products available through the RDS API around COVID-19 and it is important to know what RDS methods to use based on the data that is included in the data product. This will go through two examples explaining the differences between some of the data products available and what to look for when querying the data. 
 
-First, connect to the RDS server and get the COVID-19 catalog that houses the data products. 
+First, connect to the RDS server. 
 
 ```{r }
-# factors vs data types
 # connect to the rds server
-rds <- get.rds("http://dev.richdataservices.com")
-
-# get the covid catalog
-catalog <- getCatalog(rds, "covid19")
+rds <- get.rds("http://covid19.richdataservices.com/rds")
 ```
 
 ## {.tabset}
@@ -101,11 +86,14 @@ RDS will empower us to quickly create a country selector and run the queries to 
 
 ##### Getting the Data Product
 
-The JHU CCSE Country data product can be retrieved from the COVID-19 catalog that has already been retrieved.
+The JHU CCSE Country data product can be retrieved from the international COVID-19 catalog.
 
 ```{r }
+# get the international catalog that contains the JHU country data
+internationalCatalog <- getCatalog(rds, "int")
+
 # get the JHU Product
-jhuCountry <- getDataProduct(catalog, "us_jhu_ccse_country")
+jhuCountry <- getDataProduct(internationalCatalog, "jhu_country")
 ```
 
 ##### Discovering Countries to View
@@ -131,7 +119,6 @@ Because this is a time series data product it is critical that the `date_stamp` 
 ```{r }
 # set up method to retrieve the data using the input country
 select <- reactive({
-  
   # get the associated country code (input$country) from the country name the user selected
   countryCode <- countries[countries$name == input$country, "codeValue"]
  
@@ -141,7 +128,6 @@ select <- reactive({
     cols = c("date_stamp", "cnt_confirmed", "cnt_death", "cnt_recovered"),
     where = paste("iso3166_1=", countryCode, sep = "", collapse = NULL)
   )
-  
   dataSet@records
 })
 ```
@@ -183,11 +169,14 @@ This example will build a graph about the individuals by gender and age group an
 
 ##### Getting the Data Product
 
-The Statistics Canada data product can be retrieved from the COVID-19 catalog that has already been retrieved.
+The Statistics Canada data product can be retrieved from the Canada COVID-19 catalog.
 
 ```{r }
+# get the Canadian COVID-19 catalog that contains the Statistics Canada data
+caCatalog <- getCatalog(rds, "ca")
+
 # get the Statistics Canada Product
-statCan <- getDataProduct(catalog, "ca_statcan")
+statCan <- getDataProduct(caCatalog, "ca_statcan_cases")
 ```
 
 ##### Building the Filtering Selections
@@ -226,7 +215,6 @@ With the codes retrieved it is time to set up a method to query the data product
 ```{r }
 # set up method to retrieve the data using the inputs by the select boxes
 tabulation <- reactive({
-  
   # build up the where clause
   where <- c()
   if (input$transmission != default) {
