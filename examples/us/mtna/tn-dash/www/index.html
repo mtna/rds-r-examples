@@ -1,0 +1,292 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <!--This code is necessary to include important shiny-related references -->
+        {{headContent()}}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <style>
+            * {
+            box-sizing: border-box;
+            }
+    
+            a {
+                text-decoration: none;
+            }
+
+            body {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            /* For mobile phones: */
+            [class*="col-"] {
+            width: 100%;
+            }
+    
+            @media only screen and (min-width: 600px) {
+            /* For tablets: */
+            .col-s-1 {width: 8.33%;}
+            .col-s-2 {width: 16.66%;}
+            .col-s-3 {width: 25%;}
+            .col-s-4 {width: 33.33%;}
+            .col-s-5 {width: 41.66%;}
+            .col-s-6 {width: 50%;}
+            .col-s-7 {width: 58.33%;}
+            .col-s-8 {width: 66.66%;}
+            .col-s-9 {width: 75%;}
+            .col-s-10 {width: 83.33%;}
+            .col-s-11 {width: 91.66%;}
+            .col-s-12 {width: 100%;}
+            }
+    
+            @media only screen and (min-width: 820px) {
+            /* For desktop: */
+            .col-1 {width: 8.33%;}
+            .col-2 {width: 16.66%;}
+            .col-3 {width: 25%;}
+            .col-4 {width: 33.33%;}
+            .col-5 {width: 41.66%;}
+            .col-6 {width: 50%;}
+            .col-7 {width: 58.33%;}
+            .col-8 {width: 66.66%;}
+            .col-9 {width: 75%;}
+            .col-10 {width: 83.33%;}
+            .col-11 {width: 91.66%;}
+            .col-12 {width: 100%;}
+            }
+    
+            [class*="col-"] {
+            float: left;
+            padding: 15px;
+            }
+    
+    
+            .row::after {
+            content: "";
+            clear: both;
+            display: table;
+            }
+    
+            input[type="number"] {
+            max-width: 80%;
+            }
+    
+            div.outer {
+            position: fixed;
+            top: 41px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            padding: 0;
+            }
+    
+            h1, h2, h3, h4 { font-weight: 400; }
+    
+            #controls {
+            /* Appearance */
+            background-color: white;
+            padding: 0 20px 20px 20px;
+            cursor: move;
+            }
+    
+            /* Position and style citation */
+            #cite {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 12px;
+            }
+    
+            /* If not using map tiles, show a white background */
+            .leaflet-container {
+            background-color: white !important;
+            }
+    
+            .mtna-banner {
+            background-image: url('https://mtna.s3.amazonaws.com/rds/images/RShiny/bg-squares.png'), url('https://mtna.s3.amazonaws.com/rds/images/RShiny/bg-squares.png'),
+                linear-gradient(294.19deg, #378dc5 2.04%, #1865a3 94.79%);
+            background-repeat: no-repeat, no-repeat, repeat;
+            background-position: -410px -150px, calc(100% + 250px) calc(100% + 100px), center;
+            padding: 32px 20px;
+            }
+    
+            .mtna-banner > h1 {
+            color: #fff;
+            margin: 0;
+            }
+    
+            .mtna-banner >h2 {
+            color: #fff;
+            margin: 0;
+            text-align: left;
+            }
+    
+            .banner-container {
+            color: white;
+            display: flex;
+            z-index: 1;
+            }
+    
+            .banner-container > img {
+            height: 124px;
+            }
+    
+            .dev-story-box {
+            background-color: rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            margin: 32px 0;
+            padding: 32px;
+            }
+    
+            .banner-footnote {
+            margin-top: 16px;
+            }
+    
+            .text-secondary {
+            color: #80bd01;
+            fill: #80bd01;
+            }
+
+            .rds-button {
+                font-weight: 500;
+                text-align: center;
+                border-radius: 10px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .rds-button {
+                margin-left: 23px; 
+            }
+
+            .rds-button * {
+                flex-shrink: 0;
+            }
+
+            .rds-button svg {
+                height: 24px;
+                width: 24px;
+                margin-right: 10px;
+                fill: #edf1f4;
+                stroke: #edf1f4;
+            }
+
+            .rds-button i {
+                margin-right: 10px;
+            }
+
+            .rds-button: hover {
+                color: #ffffff;
+            }
+
+            .rds-button :hover svg {
+                fill: #ffffff;
+                stroke: #ffffff;
+            }
+
+            .rds-button-flat-white {
+                color: #ffffff;
+                font-size: 18px;
+                line-height: 21px;
+                padding: 15px 20px;
+                box-shadow: 2px 4px 19px rgba(5, 11, 15, 0.33), 1px 14px 44px rgba(0, 0, 0, 0.1);
+                border: 2px solid #edf1f4;
+            }
+            .rds-button-flat-white:hover {
+                background: #edf1f4;
+                color: #00558c;
+
+                
+            }
+
+            .rds-button-flat-white:hover svg {
+                fill: #00558c;
+                stroke: #00558c;
+                }
+
+            .rds-button-secondary-small {
+                color: #edf1f4;
+                font-size: 18px;
+                line-height: 21px;
+                padding: 15px 20px;
+                background: #80bd01;
+                box-shadow: 2px 4px 19px rgba(5, 11, 15, 0.33), 1px 14px 44px rgba(0, 0, 0, 0.1);
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="mtna-banner">
+                <div class="banner-container">
+                    <div class="row">
+                    <div class="col-2 col-s-3 rds-image">
+                        <img src="https://mtna.s3.amazonaws.com/rds/images/RShiny/rds-icon-white.svg">
+                    </div>
+                    <div class="col-12 col-s-12">
+                        <h2 class="mdc-typography--headline2" style="margin:0px;">Tennessee Dashboard</h2>
+                        <h4 class="mdc-typography--headline4" style="margin:0px;">COVID-19, Google Mobility Report </h4>
+                        <p class="mdc-typography--body1">
+                        This Rich Data Services powered dashboard combines data from the Tennessee State Health Department's
+                        <a target="_blank" class="text-secondary" href="https://covid19.richdataservices.com/rds-explorer/explore/us_tn/us_tn_doh_county/data?collimit=25&coloffset=0&count=true&offset=0&limit=25">
+                            COVID-19 County Level Case Information</a>
+                        and the
+                        <a target="_blank" class="text-secondary" href="https://covid19.richdataservices.com/rds-explorer/explore/us/google_mobility_us_county/data?collimit=25&coloffset=0&count=true&offset=0&limit=25">
+                            County Level Google Mobility Reports 
+                        </a>.
+                        </p>
+                        <p>
+                        It has been designed with the open source <a target="_blank" class="text-secondary" href="https://github.com/mtna/rds-r">rds-r library</a> developed by MTNA to demonstrate RDS benefits and flexibility in terms of combining
+                        data from multiple sources for visualization or story telling puposes and rapid design.
+                        </p>
+                        <a class="rds-button rds-button-secondary-small" href="https://covid19.richdataservices.com/" target="_blank">
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
+                            RDS COVID-19 Project
+                        </a>
+                        <a class="rds-button rds-button-flat-white" href="https://www.richdataservices.com" target="_blank">
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>What is RDS?
+                        </a>
+                        <p>This website is inteded as a technology showcase and should not be used for any other purposes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-s-12">
+                <h2>Total Cases by County</h2>
+                {{ uiOutput("county") }}
+                {{ leafletOutput("map") }}
+            </div>
+            <div class="col-6 col-s-12">
+                <div class="row">
+                    <h3 style="margin:0px;">Case Information</h3>
+                    <div class="row">
+                        <div class="col-7 col-s-12">
+                            {{ plotOutput("cases") }} 
+                        </div>
+                        <div class="col-5 col-s-12">
+                            {{ uiOutput("caseMeasures") }}
+                            {{ uiOutput("caseMeasureDescription") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h3 style="margin:0px;"">Mobility Information</h3>
+                    <div class="row">
+                        <div class="col-7 col-s-12">
+                            {{ plotOutput("mobility") }}
+                        </div>
+                        <div class="col-5 col-s-12">
+                            {{ uiOutput("mobilityMeasures") }}
+                            {{ uiOutput("mobilityDescription") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

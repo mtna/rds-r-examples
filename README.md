@@ -19,7 +19,8 @@ This repository may contain shiny, rmarkdown, or r script files. As such any of 
 
 ## Active Examples
 
-- [COVID-19 Shiny RMarkdown](https://covid19.richdataservices.com/rds-rshiny/covid-19/) using the Johns Hopkins University Country data and Statistics Canada case reports. [-> Source](https://github.com/mtna/rds-r-examples/tree/master/examples/us/mtna)
+- [COVID-19 Shiny RMarkdown](https://covid19.richdataservices.com/rds-rshiny/covid-19/) using the Johns Hopkins University Country data and Statistics Canada case reports. [-> Source](https://github.com/mtna/rds-r-examples/tree/master/examples/us/mtna/covid-19)
+- [TN State Shiny Dashboard](https://covid19.richdataservices.com/rds-rshiny/tn_dash/) using the Tennessee State Department of Health COVID-19 case information and Google Mobility Reports data. [-> Source](https://github.com/mtna/rds-r-examples/tree/master/examples/us/mtna/tn-dash)
 
 ## Contribute
 
